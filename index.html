@@ -6,10 +6,13 @@
     <title>Document</title>
     <link
       rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
+
     <div id="first_pg" class="first_pg">
       <div class="pg_content">
         <div class="icon_trivia"><i class="fa-solid fa-mask"></i></div>
@@ -17,7 +20,7 @@
         <div><button id="start_btn" class="start_btn">Take Quiz</button></div>
       </div>
     </div>
-    
+
     <div id="info_box" class="info_box d-none">
       <div class="info_title">
         <span>Quiz Instructions</span>
@@ -46,6 +49,7 @@
     </div>
 
     <div id="quiz_box" class="quiz_box d-none">
+
       <header>
         <div class="title">Quizzz</div>
         <div class="timer">
@@ -53,9 +57,11 @@
           <span>30sec</span>
         </div>
       </header>
+
       <section>
         <div class="main">
-          <div>
+          <div id="question-wrapper">
+
             <h3 class="question">1. Javascript is a _____________ language</h3>
             <ul>
               <li>
@@ -75,28 +81,35 @@
                 <label for="ans4" id="option4">None of the Above</label>
               </li>
             </ul>
+
           </div>
         </div>
-        <div id="showScore" class="" scoreA></div>
+        <!-- <div id="showScore" class="" scoreA></div> -->
       </section>
+
 
       <footer>
         <button class="next">
-            <i
-              class="fa-solid fa-chevron-left"
-              style="color: white; font-size: 15px"
-            ></i>
-          </button>
+          <i
+            class="fa-solid fa-chevron-left"
+            style="color: white; font-size: 15px"
+            id="previous"
+          ></i>
+        </button>
         <button class="next">
           <i
             class="fa-solid fa-chevron-right"
             style="color: white; font-size: 15px"
+            id="next"
           ></i>
         </button>
-        
       </footer>
     </div>
+
     <button id="submit" class="d-none">Submit</button>
+
+
     <script src="script.js"></script>
+
   </body>
 </html>

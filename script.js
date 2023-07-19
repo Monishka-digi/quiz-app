@@ -86,13 +86,52 @@
   const QUIZ_BOX = document.getElementById("quiz_box");
   const QUESTION_WRAPPER = document.getElementById("question-wrapper");
   const PREVIOUS_BTN = document.getElementById("previous");
-  const NEXT_BTN = document.getElementById("next")
+  const NEXT_BTN = document.getElementById("next");
+  const TIMER = document.getElementById("timer");
 
   let currentQuestionIndex = 0;
+  let timeInterVal;
+
+  const setTimer = (timer = 3) => {
+    clearInterval(timeInterVal);
+    TIMER.innerText = `${timer} sec`;
+    timeInterVal = setInterval(() => {
+      timer = timer - 1;
+      TIMER.innerText = `${timer} sec`;
+      if (timer === 0) {
+        clearInterval(timeInterVal);
+        if (currentQuestionIndex < 0 || currentQuestionIndex >= 9) {
+          QUESTION_WRAPPER.innerHTML = `Test End !!`;
+          return false;
+        }
+        timer = 3;
+        currentQuestionIndex = currentQuestionIndex + 1;
+        QUESTION_WRAPPER.innerHTML = nextQuestion();
+        // setTimer(10)
+      }
+    }, 1000);
+  };
 
   const nextQuestion = () => {
+    if(currentQuestionIndex === 0) {
+      PREVIOUS_BTN.classList.add('d-none')
+    } else {
+      PREVIOUS_BTN.classList.remove('d-none')
+    }
+    if(currentQuestionIndex >= 9) {
+      NEXT_BTN.classList.add('d-none')
+    } else {
+      NEXT_BTN.classList.remove('d-none')
+    }
+    
+
+    if (currentQuestionIndex === 10) {
+      QUESTION_WRAPPER.innerHTML = `Test End !!`;
+      return;
+    }
     const currentQuestion = quizDB[currentQuestionIndex];
     const { question, a, b, c, d } = currentQuestion;
+
     const newQuestion = `
     <h3 class="question">${question}</h3>
     <ul>
@@ -114,6 +153,7 @@
       </li>
     </ul>   
   `;
+    setTimer(3);
     return newQuestion;
   };
 
@@ -132,22 +172,24 @@
   CONTINUE_BTN.addEventListener("click", () => {
     INFO_BOX.classList.toggle("d-none");
     QUIZ_BOX.classList.toggle("d-none");
+    QUESTION_WRAPPER.innerHTML = nextQuestion();
   });
 
   PREVIOUS_BTN.addEventListener("click", () => {
     currentQuestionIndex = currentQuestionIndex - 1;
-    if(currentQuestionIndex < 0 || currentQuestionIndex > 9) {
-      return false
+    if (currentQuestionIndex < 0 || currentQuestionIndex > 9) {
+      QUESTION_WRAPPER.innerHTML = `Test End !!`;
+      return false;
     }
     QUESTION_WRAPPER.innerHTML = nextQuestion();
-  })
+  });
 
   NEXT_BTN.addEventListener("click", () => {
-    if(currentQuestionIndex < 0 || currentQuestionIndex > 9) {
-      return false
+    if (currentQuestionIndex < 0 || currentQuestionIndex > 9) {
+      QUESTION_WRAPPER.innerHTML = `Test End !!`;
+      return false;
     }
     currentQuestionIndex = currentQuestionIndex + 1;
     QUESTION_WRAPPER.innerHTML = nextQuestion();
-  })
-
+  });
 })();

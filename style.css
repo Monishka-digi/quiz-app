@@ -8,14 +8,16 @@
     box-sizing: border-box;
     font-family: 'Nunito', sans-serif;
 }
-/* body{
+body{
+    width: 100vw;
+    height: 100vh;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-} */
+}
 
 .first_pg{
-    background-image: url("joshua-fuller-BEeu6Oi5Wug-unsplash.jpg");
+    background-image: url("/assets/joshua-fuller.jpg");
     background-size: cover;
     border-radius: 10px;
     width: 539.99px;

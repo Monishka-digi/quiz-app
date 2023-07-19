@@ -54,53 +54,29 @@
         <div class="title">Quizzz</div>
         <div class="timer">
           <span>Time Left:</span>
-          <span>30sec</span>
+          <span id="timer"></span>
         </div>
       </header>
 
       <section>
         <div class="main">
-          <div id="question-wrapper">
-
-            <h3 class="question">1. Javascript is a _____________ language</h3>
-            <ul>
-              <li>
-                <input type="radio" name="answer" id="ans1" class="answer" />
-                <label for="ans1" id="option1">Object-Oriented</label>
-              </li>
-              <li>
-                <input type="radio" name="answer" id="ans2" class="answer" />
-                <label for="ans2" id="option2">Object-Based</label>
-              </li>
-              <li>
-                <input type="radio" name="answer" id="ans3" class="answer" />
-                <label for="ans3" id="option3">Procedural</label>
-              </li>
-              <li>
-                <input type="radio" name="answer" id="ans4" class="answer" />
-                <label for="ans4" id="option4">None of the Above</label>
-              </li>
-            </ul>
-
-          </div>
+          <div id="question-wrapper"></div>
         </div>
         <!-- <div id="showScore" class="" scoreA></div> -->
       </section>
 
 
       <footer>
-        <button class="next">
+        <button class="next" id="previous">
           <i
             class="fa-solid fa-chevron-left"
             style="color: white; font-size: 15px"
-            id="previous"
           ></i>
         </button>
-        <button class="next">
+        <button class="next" id="next">
           <i
             class="fa-solid fa-chevron-right"
             style="color: white; font-size: 15px"
-            id="next"
           ></i>
         </button>
       </footer>

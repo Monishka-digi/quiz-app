@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div id="first_pg" class="first_pg">
+      <div class="pg_content">
+        <div class="icon_trivia"><i class="fa-solid fa-mask"></i></div>
+        <h1 class="trivia">Trivia!</h1>
+        <div><button id="start_btn" class="start_btn">Take Quiz</button></div>
+      </div>
+    </div>
+    
+    <div id="info_box" class="info_box d-none">
+      <div class="info_title">
+        <span>Quiz Instructions</span>
+      </div>
+      <div class="info_list">
+        <div class="info">
+          1. You will only have <span>30 seconds</span> to answer each question
+        </div>
+        <div class="info">
+          2. Once selected, the answer cannot be reselected
+        </div>
+        <div class="info">3. You can only exit the quiz once completed</div>
+        <div class="info">4. Navigation is not permitted</div>
+        <div class="info">
+          4. Points are awarded on the basis of no. of correct selections
+        </div>
+        <div class="info">
+          5. No negative points are given for wrong selections
+        </div>
+        <div class="info">6. All the Best!</div>
+      </div>
+      <div class="exit_continue">
+        <div class="exit"><button id="exit">Exit</button></div>
+        <div class="continue"><button id="continue">Continue</button></div>
+      </div>
+    </div>
+
+    <div id="quiz_box" class="quiz_box d-none">
+      <header>
+        <div class="title">Quizzz</div>
+        <div class="timer">
+          <span>Time Left:</span>
+          <span>30sec</span>
+        </div>
+      </header>
+      <section>
+        <div class="main">
+          <div>
+            <h3 class="question">1. Javascript is a _____________ language</h3>
+            <ul>
+              <li>
+                <input type="radio" name="answer" id="ans1" class="answer" />
+                <label for="ans1" id="option1">Object-Oriented</label>
+              </li>
+              <li>
+                <input type="radio" name="answer" id="ans2" class="answer" />
+                <label for="ans2" id="option2">Object-Based</label>
+              </li>
+              <li>
+                <input type="radio" name="answer" id="ans3" class="answer" />
+                <label for="ans3" id="option3">Procedural</label>
+              </li>
+              <li>
+                <input type="radio" name="answer" id="ans4" class="answer" />
+                <label for="ans4" id="option4">None of the Above</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div id="showScore" class="" scoreA></div>
+      </section>
+
+      <footer>
+        <button class="next">
+            <i
+              class="fa-solid fa-chevron-left"
+              style="color: white; font-size: 15px"
+            ></i>
+          </button>
+        <button class="next">
+          <i
+            class="fa-solid fa-chevron-right"
+            style="color: white; font-size: 15px"
+          ></i>
+        </button>
+        
+      </footer>
+    </div>
+    <button id="submit" class="d-none">Submit</button>
+    <script src="script.js"></script>
+  </body>
+</html>

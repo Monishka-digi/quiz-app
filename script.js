@@ -1,83 +1,7 @@
-(() => {
-  const quizDB = [
-    {
-      question: "Q1. Javascript is a _____________ language",
-      a: "Object-Oriented",
-      b: "Object-Based",
-      c: "Procedural",
-      d: "None of the Above",
-    },
-    {
-      question:
-        "Q2. Which of the following methods is used to access HTML elements using Javascript?",
-      a: "getElementbyId()",
-      b: "getElementsbyClassName()",
-      c: "Both A & B",
-      d: "None of the Above",
-    },
-    {
-      question:
-        "Q3. Upon encountering empty statements, what does the Javascript Interpreter do?",
-      a: "Throws an error",
-      b: "Ignores the statement",
-      c: "Gives Warning",
-      d: "None of the Above",
-    },
-    {
-      question:
-        "Q4. Which of the following methods can be used to display data in some form using Javascript?",
-      a: "document.write()",
-      b: "console.log()",
-      c: "window.alert()",
-      d: "All of the Above",
-    },
-    {
-      question:
-        "Q5. What keyword is used to check whether a given property is valid or not?",
-      a: "in",
-      b: "is in",
-      c: "exists",
-      d: "lies",
-    },
-    {
-      question:
-        "Q6. When an operators value is NULL, the typeof returned by the unary operator is:",
-      a: "Object",
-      b: "Boolean",
-      c: "Undefined",
-      d: "Integer",
-    },
-    {
-      question:
-        "Q7. Which function is used to serialize an object into a JSON string in Javascript?",
-      a: "stringify()",
-      b: "parse()",
-      c: "convert()",
-      d: "None of the Above",
-    },
-    {
-      question: "Q8. The 3 basic object attributes in Javascript are:",
-      a: "Class, prototype, object's parameters",
-      b: "Class, prototype, object's extensible flag",
-      c: "Class, parameters, object's parameters",
-      d: "Class, Native object, Interfaces and Object's extensible flag",
-    },
-    {
-      question: "Q9. How to stop an interval timer in Javascript?",
-      a: "clearInterval",
-      b: "clearTimer",
-      c: "intervalOver",
-      d: "None of the Above",
-    },
-    {
-      question: "Q10. Which object in Javascript doesn't have a prototype?",
-      a: "Base Object",
-      b: "All objects have a prototype",
-      c: "None of the ojects have a prototype",
-      d: "None of the Above",
-    },
-  ];
+import { quizDB } from "./helper/data.js"
+import { answerMaker } from "./helper/answerMarker.js";
 
+(() => {
   const START_BTN = document.getElementById("start_btn");
   const FIRST_PG = document.getElementById("first_pg");
   const EXIT_BTN = document.getElementById("exit");
@@ -88,11 +12,13 @@
   const PREVIOUS_BTN = document.getElementById("previous");
   const NEXT_BTN = document.getElementById("next");
   const TIMER = document.getElementById("timer");
+  const SUBMIT_BTN = document.getElementById("submit");
 
   let currentQuestionIndex = 0;
   let timeInterVal;
+  let userAnswers = [];
 
-  const setTimer = (timer = 3) => {
+  const setTimer = (timer = 15) => {
     clearInterval(timeInterVal);
     TIMER.innerText = `${timer} sec`;
     timeInterVal = setInterval(() => {
@@ -102,31 +28,32 @@
         clearInterval(timeInterVal);
         if (currentQuestionIndex < 0 || currentQuestionIndex >= 9) {
           QUESTION_WRAPPER.innerHTML = `Test End !!`;
+          SUBMIT_BTN.classList.remove("d-none");
           return false;
         }
-        timer = 3;
+        timer = 15;
         currentQuestionIndex = currentQuestionIndex + 1;
         QUESTION_WRAPPER.innerHTML = nextQuestion();
-        // setTimer(10)
+        answerMaker()
       }
     }, 1000);
   };
 
   const nextQuestion = () => {
-    if(currentQuestionIndex === 0) {
-      PREVIOUS_BTN.classList.add('d-none')
+    if (currentQuestionIndex === 0) {
+      PREVIOUS_BTN.classList.add("d-none");
     } else {
-      PREVIOUS_BTN.classList.remove('d-none')
+      // PREVIOUS_BTN.classList.remove("d-none");
     }
-    if(currentQuestionIndex >= 9) {
-      NEXT_BTN.classList.add('d-none')
+    if (currentQuestionIndex >= 9) {
+      NEXT_BTN.classList.add("d-none");
     } else {
-      NEXT_BTN.classList.remove('d-none')
+      NEXT_BTN.classList.remove("d-none");
     }
-    
 
     if (currentQuestionIndex === 10) {
       QUESTION_WRAPPER.innerHTML = `Test End !!`;
+      SUBMIT_BTN.classList.remove("d-none");
       return;
     }
     const currentQuestion = quizDB[currentQuestionIndex];
@@ -134,27 +61,72 @@
 
     const newQuestion = `
     <h3 class="question">${question}</h3>
-    <ul>
+    <ul class="answers">
       <li>
-        <input type="radio" name="answer" id="ans1" class="answer" />
-        <label for="ans1" id="option1">${a}</label>
+        <input type="radio" name="answer" id="a" class="answer"/>
+        <label for="a" id="option1">${a}</label>
       </li>
       <li>
-        <input type="radio" name="answer" id="ans2" class="answer" />
-        <label for="ans2" id="option2">${b}</label>
+        <input type="radio" name="answer" id="b" class="answer" />
+        <label for="b" id="option2">${b}</label>
       </li>
       <li>
-        <input type="radio" name="answer" id="ans3" class="answer" />
-        <label for="ans3" id="option3">${c}</label>
+        <input type="radio" name="answer" id="c" class="answer" />
+        <label for="c" id="option3">${c}</label>
       </li>
       <li>
-        <input type="radio" name="answer" id="ans4" class="answer" />
-        <label for="ans4" id="option4">${d}</label>
+        <input type="radio" name="answer" id="d" class="answer" />
+        <label for="d" id="option4">${d}</label>
       </li>
     </ul>   
   `;
-    setTimer(3);
+    setTimer(15);
     return newQuestion;
+  };
+
+  // Array to store the user's selected answers
+
+  const checkAnswer = () => {
+    const answerElements = document.querySelectorAll(".answer");
+    let userSelectedAnswer = null;
+
+    answerElements.forEach((element) => {
+      if (element.checked) {
+        userSelectedAnswer = parseInt(element.id.replace("ans", ""));
+      }
+    });
+
+    userAnswers[currentQuestionIndex] = userSelectedAnswer;
+  };
+
+  const calculateScore = () => {
+    let score = 0;
+    for (let i = 0; i < quizDB.length; i++) {
+      if (userAnswers[i] === quizDB[i].correct) {
+        score++;
+      }
+    }
+    return score;
+  };
+
+  const showResult = () => {
+    QUESTION_WRAPPER.innerHTML = `
+      <h3>Quiz Finished!</h3>
+      <strong>Your Score: ${calculateScore()} out of ${quizDB.length}</strong>
+      <p>Correct Answers:</p>
+      <ul>
+        ${quizDB
+          .map((question, index) => {
+            return `<li>${question.question} --
+              <b>${question[question.correct]}</b>
+            </li>`;
+          })
+          .join("")}
+      </ul>
+    `;
+    NEXT_BTN.classList.add("d-none");
+    // PREVIOUS_BTN.classList.add("d-none");
+    SUBMIT_BTN.classList.add("d-none");
   };
 
   START_BTN.addEventListener("click", () => {
@@ -173,23 +145,32 @@
     INFO_BOX.classList.toggle("d-none");
     QUIZ_BOX.classList.toggle("d-none");
     QUESTION_WRAPPER.innerHTML = nextQuestion();
+    answerMaker();
   });
 
-  PREVIOUS_BTN.addEventListener("click", () => {
-    currentQuestionIndex = currentQuestionIndex - 1;
-    if (currentQuestionIndex < 0 || currentQuestionIndex > 9) {
-      QUESTION_WRAPPER.innerHTML = `Test End !!`;
-      return false;
-    }
-    QUESTION_WRAPPER.innerHTML = nextQuestion();
-  });
+  // PREVIOUS_BTN.addEventListener("click", () => {
+  //   currentQuestionIndex = currentQuestionIndex - 1;
+  //   if (currentQuestionIndex < 0 || currentQuestionIndex > 9) {
+  //     QUESTION_WRAPPER.innerHTML = `Test End !!`;
+  //     SUBMIT_BTN.classList.remove("d-none");
+  //     return false;
+  //   }
+  //   QUESTION_WRAPPER.innerHTML = nextQuestion();
+  // });
 
   NEXT_BTN.addEventListener("click", () => {
     if (currentQuestionIndex < 0 || currentQuestionIndex > 9) {
       QUESTION_WRAPPER.innerHTML = `Test End !!`;
+      SUBMIT_BTN.classList.remove("d-none");
       return false;
     }
     currentQuestionIndex = currentQuestionIndex + 1;
     QUESTION_WRAPPER.innerHTML = nextQuestion();
+    answerMaker();
+  });
+
+  SUBMIT_BTN.addEventListener("click", () => {
+    checkAnswer();
+    showResult();
   });
 })();
